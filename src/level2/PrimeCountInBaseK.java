@@ -1,7 +1,5 @@
 package level2;
 
-import java.util.Arrays;
-
 public class PrimeCountInBaseK {
     public static void main(String[] args) {
         int n = 110011;
@@ -16,7 +14,7 @@ public class PrimeCountInBaseK {
         public int solution(int n, int k) {
             int answer = 0;
 
-            String str = Long.toString(n, k);
+            String str = Integer.toString(n, k);
             String[] arr = str.split("0");
 
             for(String s : arr) {
