@@ -25,11 +25,9 @@ public class Compression_3rd {
             for(int i = 0; i < msg.length(); i++) {
                 String temp = msg.charAt(i) + "";
                 while(map.containsKey(temp)) {
-                    if (i == msg.length() - 1) {
-                        i++;
-                        break;
-                    }
-                    temp += msg.charAt(++i);
+                    i++;
+                    if (i == msg.length()) break;
+                    temp += msg.charAt(i);
                 }
                 i--;
 
@@ -42,8 +40,7 @@ public class Compression_3rd {
                 list.add(map.get(temp.substring(0, temp.length() - 1)));
             }
 
-
-            return list.stream().mapToInt(Integer::intValue).toArray();
+            return list.stream().mapToInt(i -> i).toArray();
         }
     }
 }
