@@ -2,40 +2,28 @@ import java.util.*;
 
 class Solution {
     Map<String, Integer> map = new HashMap<>();
+    int max = 0;
     public String[] solution(String[] orders, int[] course) {
-        for (String order : orders) {
-            for (int k : course) {
+        List<String> answer = new ArrayList<>();
+
+        for (int k : course) {
+            for (String order : orders) {
                 if (order.length() >= k) {
                     mkCombination(k, order, new ArrayList<>(), 0);
                 }
             }
-        }
 
-        Map<Integer, List<String>> resultMap = new HashMap<>();
-
-        for(int k : course) {
-            int max = 0;
-            for(String key : map.keySet()) {
-                if(key.length() == k && map.get(key) >= 2) {
-                    if(!resultMap.containsKey(k)) resultMap.put(k, new ArrayList<>());
-                    if(map.get(key) == max) resultMap.get(k).add(key);
-                    if(map.get(key) > max) {
-                        resultMap.get(k).clear();
-                        resultMap.get(k).add(key);
-                        max = map.get(key);
-                    }
+            for (String key : map.keySet()) {
+                if (map.get(key) == max && max > 1) {
+                    answer.add(key);
                 }
             }
+            map.clear();
+            max = 0;
         }
 
-        List<String> resultList = new ArrayList<>();
-        for(int k : resultMap.keySet()) {
-            resultList.addAll(resultMap.get(k));
-        }
-        resultList.sort(String::compareTo);
-
-
-        return resultList.toArray(new String[0]);
+        answer.sort(String::compareTo);
+        return answer.toArray(new String[0]);
     }
 
 
@@ -47,6 +35,7 @@ class Solution {
             StringBuilder sb = new StringBuilder();
             for(String s : temp) sb.append(s);
             map.put(sb.toString(), map.getOrDefault(sb.toString(), 0) + 1);
+            max = Math.max(max, map.get(sb.toString()));
             return;
         }
 
