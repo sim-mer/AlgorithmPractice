@@ -2,12 +2,6 @@ class Solution {
     public String solution(String p) {
         if(p.isEmpty()) return "";
 
-        return func(p);
-    }
-
-    private String func(String p) {
-        if(p.isEmpty()) return "";
-
         int index = 0;
         int left = 0;
         int right = 0;
@@ -23,10 +17,10 @@ class Solution {
         String u = p.substring(0, index);
         String v = p.substring(index);
 
-        if(isCorrect) return u + func(v);
+        if(isCorrect) return u + solution(v);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("(").append(func(v)).append(")");
+        sb.append("(").append(solution(v)).append(")");
 
         for(int i = 1; i < u.length() - 1; i++) {
             if(u.charAt(i) == '(') sb.append(")");
