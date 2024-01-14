@@ -35,9 +35,7 @@ class Solution {
             int y = node.y;
             int dir = node.dir;
 
-            if(x == board.length - 1 && y == board.length - 1) {
-                continue;
-            }
+            if(x == board.length - 1 && y == board.length - 1) continue;
 
             for(int i = 0; i < 4; i++) {
                 int nx = x + dx[i];
