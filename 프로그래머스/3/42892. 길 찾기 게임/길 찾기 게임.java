@@ -1,20 +1,16 @@
 import java.util.Arrays;
 class Solution {
     int[][] answer;
-    int idx;
+    int idx = 0;
     public int[][] solution(int[][] nodeinfo) {
         answer = new int[2][nodeinfo.length];
-        idx = 0;
 
         Node[] nodes = new Node[nodeinfo.length];
         for(int i = 0; i < nodeinfo.length; i++) {
             nodes[i] = new Node(nodeinfo[i][0], nodeinfo[i][1], i + 1);
         }
 
-        Arrays.sort(nodes, (o1, o2) -> {
-            if(o1.y == o2.y) return o1.x - o2.x;
-            return o2.y - o1.y;
-        });
+        Arrays.sort(nodes, (o1, o2) -> o2.y - o1.y);
 
         Node root = nodes[0];
         for(int i = 1; i < nodes.length; i++) {
@@ -32,21 +28,21 @@ class Solution {
         if(root.x > node.x) {
             if(root.left == null) {
                 root.left = node;
-            } else {
-                insert(root.left, node);
+                return;
             }
-        } else {
-            if(root.right == null) {
-                root.right = node;
-            } else {
-                insert(root.right, node);
-            }
+            insert(root.left, node);
+            return;
         }
+        if(root.right == null) {
+            root.right = node;
+            return;
+        }
+        insert(root.right, node);
     }
 
     private void preorder(Node root) {
         if(root == null) return;
-        answer[0][idx++] = root.idx;
+        answer[0][idx++] = root.val;
         preorder(root.left);
         preorder(root.right);
     }
@@ -55,17 +51,17 @@ class Solution {
         if(root == null) return;
         postorder(root.left);
         postorder(root.right);
-        answer[1][idx++] = root.idx;
+        answer[1][idx++] = root.val;
     }
 
     static class Node {
-        int x, y, idx;
+        int x, y, val;
         Node left, right;
 
-        public Node(int x, int y, int idx) {
+        public Node(int x, int y, int val) {
             this.x = x;
             this.y = y;
-            this.idx = idx;
+            this.val = val;
         }
     }
 }
