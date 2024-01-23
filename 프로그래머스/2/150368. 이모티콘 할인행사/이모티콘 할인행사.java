@@ -18,7 +18,7 @@ class Solution {
             int subscribe = 0;
             double sum = 0;
             for(int[] user : users) {
-                double userDiscount = 1 - ((double) user[0] * 0.01);
+                double userDiscount = 1 - (user[0] * 0.01);
                 double tempSum = 0;
                 for(Emoticon emoticon : list) {
                     if(emoticon.discount > userDiscount) continue;
