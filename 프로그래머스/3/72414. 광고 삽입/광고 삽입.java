@@ -11,8 +11,11 @@ class Solution {
             int start = strToSec(arr[0]);
             int end = strToSec(arr[1]);
 
-            for(int i = start; i < end; i++) time[i]++;
+            time[start]++;
+            time[end]--;
         }
+        
+        for(int i = 0;i < playTime; i++) time[i + 1] += time[i];
 
         long sum = 0, max = 0;
         for(int i = 0;i < advTime; i++) sum += time[i];
