@@ -1,7 +1,7 @@
 import java.util.Arrays;
 class Solution {
     int[] info;
-    int[] answer;
+    int[] answer = new int[11];
     int diff = 0;
     public int[] solution(int n, int[] info) {
         this.info = info;
@@ -52,7 +52,6 @@ class Solution {
         int d = lionScore - apeachScore;
 
         if(d < 0) return;
-        if(d == 0) return;
         if(d < diff) return;
         if(d > diff) {
             diff = lionScore - apeachScore;
