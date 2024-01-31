@@ -1,7 +1,7 @@
 import java.util.*; 
 class Solution {
     public int[] solution(String[] info, String[] query) {
-        ArrayList<Applicant>[][][][] applicants = new ArrayList[3][2][2][2];
+        ArrayList<Integer>[][][][] applicants = new ArrayList[3][2][2][2];
         int[] answer = new int[query.length];
 
         for(int i = 0; i < 3; i++) {
@@ -22,7 +22,17 @@ class Solution {
             int career = infoArr[2].equals("junior") ? 0 : 1;
             int food = infoArr[3].equals("chicken") ? 0 : 1;
 
-            binInsert(applicants[lang][job][career][food], new Applicant(Integer.parseInt(infoArr[4]), score));
+            applicants[lang][job][career][food].add(score);
+        }
+
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 2; j++) {
+                for(int k = 0; k < 2; k++) {
+                    for(int l = 0; l < 2; l++) {
+                        applicants[i][j][k][l].sort(null);
+                    }
+                }
+            }
         }
 
         int idx = 0;
@@ -57,44 +67,19 @@ class Solution {
         return answer;
     }
 
-    private int binSearch(List<Applicant> list, int score) {
+    private int binSearch(List<Integer> list, int score) {
         int first = 0;
         int last = list.size() - 1;
         int mid = 0;
 
         while(first <= last) {
             mid = (first + last) / 2;
-            if(list.get(mid).score < score) {
+            if(list.get(mid) < score) {
                 first = mid + 1;
             } else {
                 last = mid - 1;
             }
         }
         return first;
-    }
-
-    private void binInsert(List<Applicant> list, Applicant applicant) {
-        int first = 0;
-        int last = list.size() - 1;
-        int mid = 0;
-
-        while(first <= last) {
-            mid = (first + last) / 2;
-            if(list.get(mid).score < applicant.score) {
-                first = mid + 1;
-            } else {
-                last = mid - 1;
-            }
-        }
-        list.add(first, applicant);
-    }
-
-    class Applicant {
-        int idx;
-        int score;
-        public Applicant(int idx, int score) {
-            this.idx = idx;
-            this.score = score;
-        }
     }
 }
