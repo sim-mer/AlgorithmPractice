@@ -18,8 +18,8 @@ class Solution {
         dlru[3] = Math.max((x - r), 0);
         dlru[2] = Math.max((c - y), 0);
         dlru[1] = Math.max((y - c), 0);
-        int dis = dlru[0] + dlru[1] + dlru[2] + dlru[3];
 
+        int dis = dlru[0] + dlru[1] + dlru[2] + dlru[3];
         int diff = k - dis;
         if (dis > k) return "impossible";
         if (diff % 2 == 1) return "impossible";
@@ -31,16 +31,12 @@ class Solution {
                 int nx = x + dir[i][0];
                 int ny = y + dir[i][1];
                 if(isPossible(nx, ny)) {
-                    x = nx;
-                    y = ny;
+                    x = nx; y = ny;
                     answer.append(dlruStr[i]);
                     if(dlru[i] > 0) dlru[i]--;
                     else {
                         diff--;
-                        if(i == 0) dlru[3]++;
-                        else if(i == 1) dlru[2]++;
-                        else if(i == 2) dlru[1]++;
-                        else dlru[0]++;
+                        dlru[3 - i]++;
                     }
                     break;
                 }
