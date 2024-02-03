@@ -24,11 +24,6 @@ class Solution {
         if (dis > k) return "impossible";
         if (diff % 2 == 1) return "impossible";
 
-        if(diff == 0) {
-            answer.append("d".repeat(dlru[0])).append("l".repeat(dlru[1])).append("r".repeat(dlru[2])).append("u".repeat(dlru[3]));
-            return answer.toString();
-        }
-
         diff /= 2;
 
         while(true) {
