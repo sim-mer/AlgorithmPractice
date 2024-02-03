@@ -51,10 +51,6 @@ class Solution {
                 }
             }
             if(diff == 0) {
-                dlru[0] = Math.max((r - x), 0);
-                dlru[3] = Math.max((x - r), 0);
-                dlru[2] = Math.max((c - y), 0);
-                dlru[1] = Math.max((y - c), 0);
                 answer.append("d".repeat(dlru[0])).append("l".repeat(dlru[1])).append("r".repeat(dlru[2])).append("u".repeat(dlru[3]));
                 return answer.toString();
             }
