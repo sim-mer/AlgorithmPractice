@@ -1,19 +1,14 @@
 class Solution {
-    int n, m;
+    int n, m, x, y;
+    final int[][] dir = {{1, 0}, {0, -1}, {0, 1}, {-1, 0}};
+    final String[] dlruStr = {"d", "l", "r", "u"};
+
+    StringBuilder answer = new StringBuilder();
     public String solution(int n, int m, int x, int y, int r, int c, int k) {
-        StringBuilder answer = new StringBuilder();
-        this.n = n;
-        this.m = m;
+        this.n = n; this.m = m;
+        this.x = x; this.y = y;
 
-        int[][] dir = {
-            {1, 0}, // d
-            {0, -1}, // l
-            {0, 1}, // r
-            {-1, 0} // u
-        };
         int[] dlru = new int[4];
-        String[] dlruStr = {"d", "l", "r", "u"};
-
         dlru[0] = Math.max((r - x), 0);
         dlru[3] = Math.max((x - r), 0);
         dlru[2] = Math.max((c - y), 0);
@@ -21,31 +16,36 @@ class Solution {
 
         int dis = dlru[0] + dlru[1] + dlru[2] + dlru[3];
         int diff = k - dis;
-        if (dis > k) return "impossible";
-        if (diff % 2 == 1) return "impossible";
+        if (dis > k || diff % 2 == 1) return "impossible";
 
         diff /= 2;
+        func(diff, dlru);
 
-        while(true) {
-            for(int i = 0; i < 4; i++) {
-                int nx = x + dir[i][0];
-                int ny = y + dir[i][1];
-                if(isPossible(nx, ny)) {
-                    x = nx; y = ny;
-                    answer.append(dlruStr[i]);
-                    if(dlru[i] > 0) dlru[i]--;
-                    else {
-                        diff--;
-                        dlru[3 - i]++;
-                    }
-                    break;
-                }
-            }
-            if(diff == 0) {
-                answer.append("d".repeat(dlru[0])).append("l".repeat(dlru[1])).append("r".repeat(dlru[2])).append("u".repeat(dlru[3]));
-                return answer.toString();
-            }
+        for(int i = 0; i < 4; i++) {
+            answer.append(dlruStr[i].repeat(dlru[i]));
         }
+        return answer.toString();
+    }
+
+    private void func(int diff, int[] dlru) {
+        if(diff == 0) return;
+        for(int i = 0; i < 4; i++) {
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(!isPossible(nx, ny)) continue;
+
+            x = nx; y = ny;
+            answer.append(dlruStr[i]);
+
+            if(dlru[i] > 0) {
+                dlru[i]--;
+                break;
+            }
+            diff--;
+            dlru[3 - i]++;
+            break;
+        }
+        func(diff, dlru);
     }
 
     private boolean isPossible(int x, int y) {
