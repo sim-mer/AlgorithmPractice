@@ -37,13 +37,13 @@ class Main{
     static boolean check(int depth){
         if(depth == size) return true;
         Node node = zeroList.get(depth);
-        Map<Integer, Integer> count = new HashMap<>();
+        int[] count = new int[10];
 
         int a, b;
 
         for(int i = 0; i < 9; i++){
-            count.put(map[node.x][i], count.getOrDefault(map[node.x][i], 0) + 1);
-            count.put(map[i][node.y], count.getOrDefault(map[i][node.y], 0) + 1);
+            count[map[node.x][i]]++;
+            count[map[i][node.y]]++;
         }
 
         if(node.x < 3) a = 0;
@@ -56,14 +56,12 @@ class Main{
 
         for(int n : sector[a]){
             for(int m : sector[b]){
-                count.put(map[n][m], count.getOrDefault(map[n][m], 0) + 1);
+                count[map[n][m]]++;
             }
         }
 
-        count.remove(0);
-
         for(int i = 1; i <= 9; i++){
-            if(count.containsKey(i)) continue;
+            if(count[i] > 0) continue;
             map[node.x][node.y] = i;
             if(check(depth + 1)) return true;
             map[node.x][node.y] = 0;
