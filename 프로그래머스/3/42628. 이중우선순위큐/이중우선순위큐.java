@@ -6,9 +6,11 @@ class Solution {
         
         for(String op : operations) {
             String[] parseOp = op.split(" ");
+            String operation = parseOp[0];
+            String num = parseOp[1];
             
-            if(parseOp[0].equals("I")) {
-                Integer v = Integer.valueOf(parseOp[1]);
+            if(operation.equals("I")) {
+                Integer v = Integer.valueOf(num);
                 
                 int c = treeMap.getOrDefault(v, 0) + 1;
                 treeMap.put(v, c);
@@ -19,27 +21,11 @@ class Solution {
                 continue;
             }
             
-            if(parseOp[1].equals("1")) {
-                Integer maxKey = treeMap.lastKey();
-                
-                Integer c = treeMap.get(maxKey);
-                if(c == 1){
-                    treeMap.remove(maxKey);
-                }
-                else {
-                    treeMap.put(maxKey, c - 1);
-                }
-                continue;
-            }
-            
-            Integer minKey = treeMap.firstKey();
-                
-            Integer c = treeMap.get(minKey);
-            if(c == 1){
-                treeMap.remove(minKey);
+            if(num.equals("1")) {
+                removeMap(treeMap, treeMap.lastKey());
             }
             else {
-                treeMap.put(minKey, c - 1);
+                removeMap(treeMap, treeMap.firstKey());
             }
         }
         
@@ -51,5 +37,14 @@ class Solution {
         Integer maxKey = treeMap.lastKey();
         
         return new int[]{maxKey, minKey};
+    }
+    
+    private void removeMap(TreeMap<Integer, Integer> treeMap, Integer key) {
+        Integer c = treeMap.get(key);
+        if (c == 1) {
+            treeMap.remove(key);
+            return;
+        }
+        treeMap.put(key, c - 1);
     }
 }
