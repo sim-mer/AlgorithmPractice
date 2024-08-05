@@ -23,10 +23,9 @@ class Solution {
             
             if(num.equals("1")) {
                 removeMap(treeMap, treeMap.lastKey());
+                continue;
             }
-            else {
-                removeMap(treeMap, treeMap.firstKey());
-            }
+            removeMap(treeMap, treeMap.firstKey());
         }
         
         if(treeMap.isEmpty()){
